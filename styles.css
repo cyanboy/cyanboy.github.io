@@ -142,7 +142,7 @@ a:focus-visible {
     margin: 0 auto;
     padding: 0 1.5rem 2rem;
     display: grid;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 h1 {
@@ -152,7 +152,7 @@ h1 {
 }
 
 h2 {
-    margin: 0 0 0.5rem;
+    margin: 0 0 1rem;
     font-size: 1.4rem;
     letter-spacing: -0.01em;
 }
@@ -230,17 +230,20 @@ p {
     box-shadow: var(--shadow);
 }
 
-.role {
+.role,
+.project {
     padding: 1rem 0;
     border-top: 1px solid var(--line);
 }
 
-.role:first-of-type {
+.role:first-of-type,
+.project:first-of-type {
     padding-top: 0.5rem;
     border-top: 0;
 }
 
-.role header {
+.role header,
+.project header {
     display: flex;
     justify-content: space-between;
     gap: 1rem;
@@ -264,6 +267,21 @@ p {
     margin-bottom: 0.3rem;
 }
 
+.project > p {
+    margin: 0.75rem 0;
+    color: var(--text);
+    line-height: 1.7;
+}
+
+.project .pill-list {
+    margin-top: 0.75rem;
+}
+
+.project-link {
+    font-weight: 600;
+    white-space: nowrap;
+}
+
 .pill-list {
     list-style: none;
     display: flex;
@@ -271,6 +289,11 @@ p {
     gap: 0.5rem;
     padding: 0;
     margin: 0.5rem 0 0;
+}
+
+/* Spacing between skill categories */
+.pill-list + h3 {
+    margin-top: 1.25rem;
 }
 
 .pill-list li {
@@ -297,35 +320,30 @@ p {
 .education {
     display: flex;
     flex-direction: column;
-    gap: 0.15rem;
+    gap: 0.25rem;
 }
 
 .education + .education {
-    margin-top: 1rem;
+    margin-top: 1.25rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--line);
 }
 
-.link-list {
-    list-style: none;
-    padding: 0;
-    margin: 0.5rem 0 0;
-    display: flex;
-    gap: 1rem;
-    flex-wrap: wrap;
+.education .thesis {
+    color: var(--muted);
+    font-size: 0.95rem;
+    font-style: italic;
+    margin-top: 0.25rem;
 }
 
-.link-list a {
-    font-weight: 600;
-}
-
-/* External link indicator - hide when HTML icon exists */
+/* External link indicator */
 .external-link-icon {
     font-size: 0.8em;
     vertical-align: super;
 }
 
 /* Hide CSS-generated icons for links that have HTML icons */
-.contact a[target="_blank"]::after,
-.link-list a[target="_blank"]::after {
+.contact a[target="_blank"]::after {
     content: none;
 }
 
@@ -372,8 +390,7 @@ p {
         vertical-align: baseline;
     }
 
-    .contact a[target="_blank"]::after,
-    .link-list a[target="_blank"]::after {
+    .contact a[target="_blank"]::after {
         content: " (" attr(href) ")";
     }
 
@@ -391,7 +408,9 @@ p {
         page-break-inside: avoid;
     }
 
-    .role {
+    .role,
+    .project,
+    .education {
         page-break-inside: avoid;
     }
 
