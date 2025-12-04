@@ -1,26 +1,94 @@
+@font-face {
+    font-family: "Montserrat";
+    src: url("fonts/Montserrat-Regular.ttf") format("truetype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("fonts/Montserrat-Italic.ttf") format("truetype");
+    font-weight: 400;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("fonts/Montserrat-SemiBold.ttf") format("truetype");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("fonts/Montserrat-SemiBoldItalic.ttf") format("truetype");
+    font-weight: 600;
+    font-style: italic;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("fonts/Montserrat-Bold.ttf") format("truetype");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: "Montserrat";
+    src: url("fonts/Montserrat-BoldItalic.ttf") format("truetype");
+    font-weight: 700;
+    font-style: italic;
+    font-display: swap;
+}
+
 :root {
-    color-scheme: light;
-    --page-bg: #f5f7fb;
-    --panel: #ffffff;
-    --text: #0f172a;
-    --muted: #5b6472;
-    --line: #e5e7eb;
-    --accent: #2563eb;
-    --accent-strong: #1d4ed8;
-    --chip-bg: #edf2ff;
-    --shadow: 0 14px 40px rgba(15, 23, 42, 0.08);
+    color-scheme: dark;
+    --page-bg: #0f172a;
+    --panel: #1e293b;
+    --text: #f1f5f9;
+    --muted: #94a3b8;
+    --line: #334155;
+    --accent: #60a5fa;
+    --accent-strong: #93c5fd;
+    --chip-bg: #1e3a5f;
+    --shadow: 0 14px 40px rgba(0, 0, 0, 0.3);
+    --focus-ring: 0 0 0 3px rgba(96, 165, 250, 0.4);
 }
 
 * {
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 body {
     margin: 0;
-    font-family: "Inter", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    font-family: "Montserrat", "Segoe UI", "Helvetica Neue", Arial, sans-serif;
     background:
-        radial-gradient(circle at 20% 20%, #eef2ff, #f8fafc 35%),
-        radial-gradient(circle at 80% 0%, #f1f5ff, #f8fafc 30%), var(--page-bg);
+        radial-gradient(circle at 20% 20%, #1e293b, #0f172a 35%),
+        radial-gradient(circle at 80% 0%, #1e3a5f, #0f172a 30%), var(--page-bg);
     color: var(--text);
     line-height: 1.6;
     min-height: 100vh;
@@ -35,6 +103,12 @@ a:hover,
 a:focus-visible {
     color: var(--accent-strong);
     text-decoration: underline;
+}
+
+a:focus-visible {
+    outline: none;
+    box-shadow: var(--focus-ring);
+    border-radius: 4px;
 }
 
 .skip-link {
@@ -132,13 +206,20 @@ p {
     color: var(--text);
     transition:
         border-color 120ms ease,
-        color 120ms ease;
+        color 120ms ease,
+        transform 120ms ease;
 }
 
 .inline-nav a:hover,
 .inline-nav a:focus-visible {
     border-color: var(--accent);
     color: var(--accent-strong);
+    text-decoration: none;
+    transform: translateY(-1px);
+}
+
+.inline-nav a:focus-visible {
+    box-shadow: var(--focus-ring);
 }
 
 .card {
@@ -197,12 +278,30 @@ p {
     border-radius: 999px;
     border: 1px solid var(--line);
     background: var(--chip-bg);
+    transition:
+        transform 120ms ease,
+        border-color 120ms ease;
+}
+
+.pill-list li:hover {
+    transform: translateY(-1px);
+    border-color: var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pill-list li:hover {
+        transform: none;
+    }
 }
 
 .education {
     display: flex;
     flex-direction: column;
     gap: 0.15rem;
+}
+
+.education + .education {
+    margin-top: 1rem;
 }
 
 .link-list {
@@ -218,6 +317,18 @@ p {
     font-weight: 600;
 }
 
+/* External link indicator - hide when HTML icon exists */
+.external-link-icon {
+    font-size: 0.8em;
+    vertical-align: super;
+}
+
+/* Hide CSS-generated icons for links that have HTML icons */
+.contact a[target="_blank"]::after,
+.link-list a[target="_blank"]::after {
+    content: none;
+}
+
 .site-footer {
     max-width: 1080px;
     margin: 0 auto;
@@ -229,5 +340,77 @@ p {
 @media (max-width: 780px) {
     .site-header {
         flex-direction: column;
+    }
+}
+
+/* Print styles */
+@media print {
+    * {
+        background: transparent !important;
+        color: #000 !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    body {
+        font-size: 11pt;
+        line-height: 1.4;
+    }
+
+    .skip-link,
+    .inline-nav {
+        display: none !important;
+    }
+
+    a {
+        text-decoration: underline;
+    }
+
+    a[target="_blank"]::after {
+        content: " (" attr(href) ")";
+        font-size: 0.8em;
+        vertical-align: baseline;
+    }
+
+    .contact a[target="_blank"]::after,
+    .link-list a[target="_blank"]::after {
+        content: " (" attr(href) ")";
+    }
+
+    .site-header,
+    .page,
+    .site-footer {
+        max-width: 100%;
+        padding: 0.5rem 0;
+    }
+
+    .card {
+        border: 1px solid #ccc;
+        border-radius: 0;
+        padding: 1rem 0;
+        page-break-inside: avoid;
+    }
+
+    .role {
+        page-break-inside: avoid;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.3rem;
+        page-break-after: avoid;
+    }
+
+    h3 {
+        font-size: 1.1rem;
+        page-break-after: avoid;
+    }
+
+    .pill-list li {
+        border: 1px solid #ccc;
+        background: transparent;
     }
 }
